@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q2 - Print Numbers</title>
+  <style>
+    body { max-width: 680px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    button { padding: 10px 16px; border: 0; border-radius: 7px; background: #2356c4; color: white; cursor: pointer; }
+    output { display: block; margin-top: 18px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Q2. Print Numbers from 1 to 50</h1>
+  <p>Open the browser developer console to see each number and the numbers divisible by 5.</p>
+  <button id="printButton" type="button">Print Numbers</button>
+  <output id="result" aria-live="polite"></output>
+  <script>
+    document.getElementById("printButton").addEventListener("click", function () {
+      const divisibleByFive = [];
+      for (let number = 1; number <= 50; number++) {
+        console.log(number);
+        if (number % 5 === 0) {
+          divisibleByFive.push(number);
+          console.log(number + " is divisible by 5");
+        }
+      }
+      document.getElementById("result").textContent =
+        "Numbers divisible by 5: " + divisibleByFive.join(", ") +
+        "\nAll numbers from 1 to 50 have been printed in the console.";
+    });
+  </script>
+</body>
+</html>

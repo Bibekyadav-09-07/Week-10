@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q8 - Count Button Clicks</title>
+  <style>
+    body { max-width: 680px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    button { padding: 10px 16px; border: 0; border-radius: 7px; background: #2356c4; color: white; cursor: pointer; }
+    #message { min-height: 1.5em; margin-top: 14px; color: #188038; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1 id="counter">Button Clicked: 0</h1>
+  <button id="clickButton" type="button">Click Me</button>
+  <p id="message" aria-live="polite"></p>
+  <script>
+    let count = 0;
+    document.getElementById("clickButton").addEventListener("click", function () {
+      count++;
+      document.getElementById("counter").textContent = "Button Clicked: " + count;
+      document.getElementById("message").textContent =
+        count >= 10 ? "You have clicked 10 times!" : "";
+    });
+  </script>
+</body>
+</html>

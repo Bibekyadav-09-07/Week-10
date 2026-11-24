@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q7 - Change Background Color</title>
+  <style>
+    body { min-height: 100vh; display: grid; place-items: center; margin: 0; padding: 24px; color: #172033; font: 16px/1.5 system-ui, sans-serif; transition: background-color 180ms ease; }
+    main { text-align: center; }
+    button { margin: 5px; padding: 11px 20px; border: 0; border-radius: 7px; color: white; cursor: pointer; }
+    #redButton { background: #d93025; }
+    #greenButton { background: #188038; }
+    #blueButton { background: #1a73e8; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Q7. Change Background Color</h1>
+    <p>Choose a color for the page background.</p>
+    <button id="redButton" type="button">Red</button>
+    <button id="greenButton" type="button">Green</button>
+    <button id="blueButton" type="button">Blue</button>
+  </main>
+  <script>
+    document.getElementById("redButton").addEventListener("click", function () {
+      document.body.style.backgroundColor = "red";
+    });
+    document.getElementById("greenButton").addEventListener("click", function () {
+      document.body.style.backgroundColor = "green";
+    });
+    document.getElementById("blueButton").addEventListener("click", function () {
+      document.body.style.backgroundColor = "blue";
+    });
+  </script>
+</body>
+</html>

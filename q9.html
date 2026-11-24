@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q9 - Display Numbers Using DOM</title>
+  <style>
+    body { max-width: 760px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    button { padding: 10px 16px; border: 0; border-radius: 7px; background: #2356c4; color: white; cursor: pointer; }
+    #numbers { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .number { min-width: 42px; padding: 8px; border-radius: 7px; background: #f0f2f6; text-align: center; }
+    .even { color: #176b3a; background: #e5f5eb; }
+    .odd { color: #984b00; background: #fff1df; }
+  </style>
+</head>
+<body>
+  <h1>Q9. Display Numbers Using DOM</h1>
+  <button id="generateButton" type="button">Generate Numbers</button>
+  <div id="numbers" aria-live="polite"></div>
+  <script>
+    document.getElementById("generateButton").addEventListener("click", function () {
+      const container = document.getElementById("numbers");
+      container.replaceChildren();
+      for (let number = 1; number <= 20; number++) {
+        const item = document.createElement("span");
+        item.className = "number " + (number % 2 === 0 ? "even" : "odd");
+        item.textContent = number;
+        container.appendChild(item);
+      }
+    });
+  </script>
+</body>
+</html>

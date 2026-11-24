@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q11 - Student Result Management System</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 40px 20px; background: #f3f6fb; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    main { max-width: 900px; margin: auto; }
+    section { margin-top: 22px; padding: 22px; border: 1px solid #dfe5ef; border-radius: 12px; background: white; }
+    .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; }
+    input { width: 100%; padding: 10px; border: 1px solid #b9c2d0; border-radius: 7px; font: inherit; }
+    button { margin: 12px 8px 0 0; padding: 10px 16px; border: 0; border-radius: 7px; background: #2356c4; color: white; cursor: pointer; font: inherit; }
+    button:hover { background: #17439e; }
+    #status { min-height: 1.5em; font-weight: 600; }
+    .error { color: #b3261e; }
+    .success { color: #188038; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; margin-top: 16px; border-collapse: collapse; text-align: left; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #dfe5ef; }
+    th { background: #f3f6fb; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Student Result Management System</h1>
+    <section aria-labelledby="addHeading">
+      <h2 id="addHeading">Add Student</h2>
+      <form id="studentForm" novalidate>
+        <div class="fields">
+          <div>
+            <label for="studentName">Student Name</label>
+            <input id="studentName" type="text" autocomplete="name">
+          </div>
+          <div>
+            <label for="mathematics">Mathematics (0-100)</label>
+            <input id="mathematics" type="number" step="any" inputmode="decimal">
+          </div>
+          <div>
+            <label for="science">Science (0-100)</label>
+            <input id="science" type="number" step="any" inputmode="decimal">
+          </div>
+          <div>
+            <label for="computer">Computer (0-100)</label>
+            <input id="computer" type="number" step="any" inputmode="decimal">
+          </div>
+        </div>
+        <button type="submit">Add Student</button>
+      </form>
+      <p id="status" aria-live="polite"></p>
+      <div id="latestResult"></div>
+    </section>
+    <section aria-labelledby="listHeading">
+      <h2 id="listHeading">Student Records</h2>
+      <button id="generateButton" type="button">Generate Student List</button>
+      <div class="table-wrap" id="studentList"></div>
+    </section>
+  </main>
+  <script>
+    const students = [];
+
+    function getGrade(percentage) {
+      if (percentage >= 90) {
+        return "A+";
+      } else if (percentage >= 80) {
+        return "A";
+      } else if (percentage >= 70) {
+        return "B";
+      } else if (percentage >= 60) {
+        return "C";
+      } else if (percentage >= 50) {
+        return "D";
+      } else {
+        return "F";
+      }
+    }
+
+    document.getElementById("studentForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const name = document.getElementById("studentName").value.trim();
+      const status = document.getElementById("status");
+      const latestResult = document.getElementById("latestResult");
+      latestResult.textContent = "";
+      status.className = "error";
+
+      if (name === "") {
+        status.textContent = "Please enter student name";
+        return;
+      }
+
+      const markInputs = [
+        document.getElementById("mathematics").value.trim(),
+        document.getElementById("science").value.trim(),
+        document.getElementById("computer").value.trim()
+      ];
+      if (markInputs.some(function (value) { return value === ""; })) {
+        status.textContent = "Please enter all subject marks";
+        return;
+      }
+
+      const marks = markInputs.map(Number);
+      if (marks.some(function (mark) {
+        return !Number.isFinite(mark) || mark < 0 || mark > 100;
+      })) {
+        status.textContent = "Error: each subject mark must be between 0 and 100.";
+        return;
+      }
+
+      const total = marks[0] + marks[1] + marks[2];
+      const percentage = total / 300 * 100;
+      const student = {
+        name: name,
+        total: total,
+        percentage: percentage,
+        grade: getGrade(percentage)
+      };
+      students.push(student);
+
+      status.className = "success";
+      status.textContent = "Result calculated successfully";
+      const result = document.createElement("p");
+      result.textContent = student.name + " - Total: " + student.total +
+        ", Percentage: " + student.percentage.toFixed(2) + "%, Grade: " + student.grade;
+      latestResult.appendChild(result);
+      document.getElementById("studentForm").reset();
+    });
+
+    document.getElementById("generateButton").addEventListener("click", function () {
+      const container = document.getElementById("studentList");
+      container.replaceChildren();
+      if (students.length === 0) {
+        container.textContent = "No student records yet.";
+        return;
+      }
+
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const headerRow = document.createElement("tr");
+      ["Student Name", "Total Marks", "Percentage", "Grade"].forEach(function (heading) {
+        const th = document.createElement("th");
+        th.scope = "col";
+        th.textContent = heading;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      for (let index = 0; index < students.length; index++) {
+        const student = students[index];
+        const row = document.createElement("tr");
+        [student.name, String(student.total), student.percentage.toFixed(2) + "%", student.grade]
+          .forEach(function (value) {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+          });
+        tbody.appendChild(row);
+      }
+      table.appendChild(tbody);
+      container.appendChild(table);
+    });
+  </script>
+</body>
+</html>

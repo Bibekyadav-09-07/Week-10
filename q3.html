@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q3 - Find the Largest Number</title>
+  <style>
+    body { max-width: 680px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    .fields { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+    input, button { padding: 10px 12px; border-radius: 7px; font: inherit; }
+    input { width: 180px; border: 1px solid #b9c2d0; }
+    button { border: 0; background: #2356c4; color: white; cursor: pointer; }
+    output { display: block; margin-top: 18px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Q3. Find the Largest Number</h1>
+  <p>Enter three numbers, then click the button.</p>
+  <form id="largestForm" novalidate>
+    <div class="fields">
+      <input id="firstNumber" type="text" inputmode="decimal" aria-label="First number" placeholder="First number">
+      <input id="secondNumber" type="text" inputmode="decimal" aria-label="Second number" placeholder="Second number">
+      <input id="thirdNumber" type="text" inputmode="decimal" aria-label="Third number" placeholder="Third number">
+    </div>
+    <button id="largestButton" type="submit">Find Largest</button>
+  </form>
+  <output id="result" aria-live="polite"></output>
+  <script>
+    document.getElementById("largestForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const firstInput = document.getElementById("firstNumber").value.trim();
+      const secondInput = document.getElementById("secondNumber").value.trim();
+      const thirdInput = document.getElementById("thirdNumber").value.trim();
+      const inputs = [firstInput, secondInput, thirdInput];
+      if (inputs.some(function (value) {
+        return value === "" || !Number.isFinite(Number(value));
+      })) {
+        document.getElementById("result").textContent = "Please enter three valid numbers.";
+        return;
+      }
+
+      const first = Number(firstInput);
+      const second = Number(secondInput);
+      const third = Number(thirdInput);
+      let largest;
+      if (first >= second && first >= third) {
+        largest = first;
+      } else if (second >= first && second >= third) {
+        largest = second;
+      } else {
+        largest = third;
+      }
+      document.getElementById("result").textContent = "The largest number is " + largest + ".";
+    });
+  </script>
+</body>
+</html>

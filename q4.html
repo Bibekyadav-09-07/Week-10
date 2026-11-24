@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q4 - Multiplication Table</title>
+  <style>
+    body { max-width: 680px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    input, button { padding: 10px 12px; border-radius: 7px; font: inherit; }
+    input { width: 220px; border: 1px solid #b9c2d0; }
+    button { border: 0; background: #2356c4; color: white; cursor: pointer; }
+    output { display: block; margin-top: 18px; white-space: pre-line; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Q4. Multiplication Table</h1>
+  <p>Enter a number to display its table from 1 to 10.</p>
+  <form id="tableForm" novalidate>
+    <input id="tableNumber" type="text" inputmode="decimal" aria-label="Number for multiplication table" placeholder="Enter a number">
+    <button id="tableButton" type="submit">Create Table</button>
+  </form>
+  <output id="result" aria-live="polite"></output>
+  <script>
+    document.getElementById("tableForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const input = document.getElementById("tableNumber").value.trim();
+      if (input === "" || !Number.isFinite(Number(input))) {
+        document.getElementById("result").textContent = "Please enter a valid number.";
+        return;
+      }
+
+      const number = Number(input);
+      const lines = [];
+      for (let multiplier = 1; multiplier <= 10; multiplier++) {
+        lines.push(number + " x " + multiplier + " = " + (number * multiplier));
+      }
+      document.getElementById("result").textContent = lines.join("\n");
+    });
+  </script>
+</body>
+</html>

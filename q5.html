@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q5 - Sum of Numbers</title>
+  <style>
+    body { max-width: 680px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    button { padding: 10px 16px; border: 0; border-radius: 7px; background: #2356c4; color: white; cursor: pointer; }
+    output { display: block; margin-top: 18px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Q5. Sum of Numbers from 1 to 100</h1>
+  <button id="sumButton" type="button">Calculate Sum</button>
+  <output id="result" aria-live="polite"></output>
+  <script>
+    document.getElementById("sumButton").addEventListener("click", function () {
+      let number = 1;
+      let sum = 0;
+      while (number <= 100) {
+        sum += number;
+        number++;
+      }
+      document.getElementById("result").textContent = "The sum of numbers from 1 to 100 is " + sum + ".";
+    });
+  </script>
+</body>
+</html>

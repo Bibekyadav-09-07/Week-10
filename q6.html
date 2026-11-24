@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q6 - Simple Login System</title>
+  <style>
+    body { max-width: 680px; margin: 60px auto; padding: 0 20px; color: #172033; font: 16px/1.5 system-ui, sans-serif; }
+    label { display: block; margin: 12px 0 5px; font-weight: 600; }
+    input, button { padding: 10px 12px; border-radius: 7px; font: inherit; }
+    input { display: block; width: 100%; max-width: 300px; border: 1px solid #b9c2d0; }
+    button { margin-top: 14px; border: 0; background: #2356c4; color: white; cursor: pointer; }
+    output { display: block; margin-top: 18px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Q6. Simple Login System</h1>
+  <p>Demo credentials: username <strong>admin</strong>, password <strong>12345</strong>.</p>
+  <form id="loginForm" novalidate>
+    <label for="username">Username</label>
+    <input id="username" type="text" autocomplete="username">
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password">
+    <button id="loginButton" type="submit">Log In</button>
+  </form>
+  <output id="result" aria-live="polite"></output>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const message = username === "admin" && password === "12345"
+        ? "Login Successful"
+        : "Invalid Username or Password";
+      document.getElementById("result").textContent = message;
+    });
+  </script>
+</body>
+</html>
